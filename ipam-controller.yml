@@ -10,12 +10,12 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: citrix-ipam-controller
 rules:
-  - apiGroups:
-    - citrix.com
-    resources:
-    - vips
-    verbs:
-    - '*'
+- apiGroups:
+  - citrix.com
+  resources:
+  - vips
+  verbs:
+  - '*'
 - apiGroups:
   - apiextensions.k8s.io
   resources:
@@ -37,12 +37,15 @@ roleRef:
   name: citrix-ipam-controller
 
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: citrix-ipam-controller
   namespace: kube-system
 spec:
+  selector:
+    matchLabels:
+      app: citrix-ipam-controller
   replicas: 1
   template:
     metadata:
@@ -54,8 +57,7 @@ spec:
       - name: citrix-ipam-controller
         image: quay.io/citrix/citrix-ipam-controller:latest
         env:
-        # This IPAM controller takes environment variable VIP_RANGE. IPs in this range are used to assign values for IP range
-      - name: "VIP_RANGE"
-        value: '["10.105.158.195/32", "10.105.158.196/31", "10.105.158.198"]'
+        - name: "VIP_RANGE"
+          value: '["x.x.x.x/32"."x.x.x.x/24"]'
         # The IPAM controller can also be configured with name spaces for which it would work through the environment variable
         # VIP_NAMESPACES, This expects a set of namespaces passed as space separated string

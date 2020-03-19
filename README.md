@@ -7,6 +7,8 @@ here is a pretty good diagram of what is going to be happening.
 
 ## Install
 
+**switch into the `kube-system` namespace**
+
 ### install the VIP CRD
 
 More info on the VIP CRD [here](https://github.com/citrix/citrix-k8s-ingress-controller/blob/master/docs/crds/vip.md)

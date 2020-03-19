@@ -49,7 +49,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: cic-k8s-role
-  namespace: default
+  namespace: kube-system
 
 ---
 
@@ -57,7 +57,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: cic-k8s-role
-  namespace: default
+  namespace: kube-system
 
 ---
 apiVersion: apps/v1
@@ -84,6 +84,10 @@ spec:
          # Set NetScaler NSIP/SNIP, SNIP in case of HA (mgmt has to be enabled) 
          - name: "NS_IP"
            value: "x.x.x.x"
+         - name: "NS_PORT"
+           value: "443"
+         - name: "NS_PROTOCOL"
+           value: "https"
          # Set username for Nitro
          - name: "NS_USER"
            valueFrom:
@@ -104,4 +108,6 @@ spec:
             citrix
           - --feature-node-watch
             false
+          - --ipam
+            citrix-ipam-controller
         imagePullPolicy: Always
